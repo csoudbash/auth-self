@@ -27,7 +27,8 @@ function ShelfPage() {
       type: 'POST_NEW_SHELF_ITEM',
       payload: {userId, description, image}
     })
-
+    setDescription('');
+    setImage('');
     // console.log(description);
     // console.log(image);
     // console.log(userId);

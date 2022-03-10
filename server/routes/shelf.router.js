@@ -22,6 +22,9 @@ if (req.isAuthenticated()) {
   }
 });
 
+/**
+ * Add an item for the logged in user to the shelf
+ */
 router.post('/', (req, res) => {
   const description = req.body.description;
   const image_url = req.body.image;
@@ -39,19 +42,22 @@ router.post('/', (req, res) => {
 });
 
 
-
-/**
- * Add an item for the logged in user to the shelf
- */
-router.post('/', (req, res) => {
-  // endpoint functionality
-});
-
 /**
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
-  // endpoint functionality
+  let itemId = Number(req.params.id);
+  let userId = Number(req.body.data);
+  console.log(itemId, userId);
+  console.log('hello');
+  let queryText = `DELETE FROM item WHERE id = $1 AND user_id = $2;`;
+  pool
+  .query(queryText, [itemId, userId])
+  .then(() => res.sendStatus(201))
+  .catch((err) => {
+      console.log('Item delete failed: ', err);
+      res.sendStatus(500);
+  });
 });
 
 /**
