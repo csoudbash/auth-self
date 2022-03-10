@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, take, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 // get route for grabbing things from the server
@@ -16,8 +16,18 @@ function* getShelf() {
     }
 }
 
+function* postShelfItem (action) {
+try{
+     yield axios.post('/api/shelf', action.payload);
+} catch {
+    console.log('error');
+}
+
+}
+
 function* shelfSaga() {
     yield takeLatest('FETCH_SHELF', getShelf);
+    yield takeLatest ('POST_NEW_SHELF_ITEM', postShelfItem);
 }
 
 export default shelfSaga;

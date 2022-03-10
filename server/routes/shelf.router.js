@@ -22,6 +22,24 @@ if (req.isAuthenticated()) {
   }
 });
 
+router.post('/', (req, res) => {
+  const description = req.body.description;
+  const image_url = req.body.image;
+  const user_id = req.body.userId;
+
+  const queryText = `INSERT INTO "item" (description, image_url, user_id)
+    VALUES ($1, $2, $3)`;
+  pool
+    .query(queryText, [description, image_url, user_id ])
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.log('Item Post failed: ', err);
+      res.sendStatus(500);
+    });
+});
+
+
+
 /**
  * Add an item for the logged in user to the shelf
  */
