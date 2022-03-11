@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   let itemId = Number(req.params.id);
-  let userId = Number(req.body.data);
+  let userId = Number(req.user.id);
   console.log(itemId, userId);
   console.log('hello');
   let queryText = `DELETE FROM item WHERE id = $1 AND user_id = $2;`;
@@ -64,6 +64,7 @@ router.delete('/:id', (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
+  queryText = `UPDATE "description" ` 
   // endpoint functionality
 });
 

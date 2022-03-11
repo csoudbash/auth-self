@@ -20,7 +20,18 @@ const shelfItem = (state = [], action) => {
     }
   };
 
+// const updateShelfItem = (state = [], action) => {
+//   switch (action.type) {
+//     case 'UPDATE_SHELF_ITEM':
+//       return action.payload;
+//     default:
+//       return state;
+//   }
+// };
+
+
 export default combineReducers({
     shelfReducer,
     shelfItem,
+    // updateShelfItem
 });

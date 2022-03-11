@@ -1,6 +1,6 @@
 import { put, take, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 // get route for grabbing things from the server
 
 function* getShelf() {
@@ -28,10 +28,8 @@ function* postShelfItem(action) {
 
 function* deleteShelfItem (action) {
     console.log(action.payload);
-    let data = action.payload.user_id
-    console.log(data);
     try {
-        yield axios.delete(`/api/shelf/${action.payload.id}`, { data: {data} } );
+        yield axios.delete(`/api/shelf/${action.payload.id}` );
 
         yield put({type: 'FETCH_SHELF'})
     } catch {
@@ -39,10 +37,23 @@ function* deleteShelfItem (action) {
     }
 }
 
+function* sendUpdatedItem (action) {
+    // console.log(updatedItem);
+    // const updatedItem = useSelector(store => store.shelf.updateShelfItem)
+    console.log(action.payload);
+    try{
+        yield axios.put(`api/shelf/${user.id}`, action.payload);
+
+    } catch {
+        console.log("rut ro scoob");
+    }
+}
+
 function* shelfSaga() {
     yield takeLatest('FETCH_SHELF', getShelf);
     yield takeLatest('POST_NEW_SHELF_ITEM', postShelfItem);
     yield takeLatest('DELETE_THING', deleteShelfItem)
+    yield takeLatest('SEND_UPDATED_ITEM', sendUpdatedItem)
 }
 
 export default shelfSaga;
